@@ -19,8 +19,17 @@ export const useToastHandler = () => {
     });
   };
 
+  const handleWarn = (message: string) => {
+    toast.add({
+      severity: "warn",
+      detail: message,
+      life: 3000,
+    });
+  };
+
   return {
     handleError,
     handleSuccess,
+    handleWarn,
   };
 };

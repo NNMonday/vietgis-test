@@ -1,4 +1,4 @@
-import buildings from "~~/shared/data/building";
+import { addBuildingToJSON } from "../../utils/buildingData";
 
 export default defineEventHandler(async (e) => {
   const newBuilding = await readBody(e);
@@ -9,10 +9,12 @@ export default defineEventHandler(async (e) => {
       name: newBuilding.representative?.name || "",
       phone: newBuilding.representative?.phone || "",
       cccd: newBuilding.representative?.cccd || "",
-      cccdIssuedDate: newBuilding.representative?.cccdIssuedDate || new Date(),
+      cccdIssuedDate: newBuilding.representative?.cccdIssuedDate
+        ? new Date(newBuilding.representative.cccdIssuedDate)
+        : new Date(),
     },
   };
 
-  buildings.push(buildingWithDefaults);
-  return buildingWithDefaults;
+  const savedBuilding = await addBuildingToJSON(buildingWithDefaults);
+  return savedBuilding;
 });

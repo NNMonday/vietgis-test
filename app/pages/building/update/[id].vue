@@ -26,7 +26,6 @@ const handleSubmit = async (building: Building) => {
       useRouter().back();
     }, 1500);
   } catch (error: any) {
-    console.error("Error updating building:", error);
     handleError(error.statusMessage || "Failed to update building");
   }
 };

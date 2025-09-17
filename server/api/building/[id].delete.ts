@@ -1,6 +1,6 @@
-import data from "#shared/data/building";
+import { deleteBuildingFromJSON } from "../../utils/buildingData";
 
-export default defineEventHandler((e) => {
+export default defineEventHandler(async (e) => {
   const id = e.context.params?.id;
 
   if (!id) {
@@ -12,21 +12,16 @@ export default defineEventHandler((e) => {
 
   const buildingId = parseInt(id);
 
-  const buildingIndex = data.findIndex(
-    (building) => building.id === buildingId
-  );
-
-  if (buildingIndex === -1) {
+  try {
+    const deletedBuilding = await deleteBuildingFromJSON(buildingId);
+    return {
+      message: "Building deleted successfully",
+      data: deletedBuilding,
+    };
+  } catch (error) {
     throw createError({
       statusCode: 404,
       statusMessage: "Building not found",
     });
   }
-
-  const deletedBuilding = data.splice(buildingIndex, 1)[0];
-
-  return {
-    message: "Building deleted successfully",
-    data: deletedBuilding,
-  };
 });

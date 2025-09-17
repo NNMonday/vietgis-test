@@ -1,8 +1,8 @@
-import buildings from "~~/shared/data/building";
+import { getBuildingByIdFromJSON } from "../../utils/buildingData";
 
-export default defineEventHandler((e) => {
+export default defineEventHandler(async (e) => {
   const id = e.context.params?.id;
-  const result = buildings.find((b) => b.id === Number(id));
+  const result = await getBuildingByIdFromJSON(Number(id));
   if (result) {
     return result;
   } else {

@@ -1,34 +1,29 @@
 {
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
+      "type": "chrome",
       "request": "launch",
-      "name": "Debug Nuxt 4.x",
-      "program": "${workspaceFolder}/node_modules/.bin/nuxi",
-      "args": ["dev"],
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "serverReadyAction": {
-        "pattern": "Local:.*https?://localhost:([0-9]+)",
-        "uriFormat": "http://localhost:%s",
-        "action": "openExternally"
-      },
-      "skipFiles": ["<node_internals>/**"]
+      "name": "client: chrome",
+      "url": "http://localhost:3000",
+      // this should point to your Nuxt `srcDir`, which is `app` by default
+      "webRoot": "${workspaceFolder}/app"
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Debug Nuxt 4.x (with inspect)",
-      "program": "${workspaceFolder}/node_modules/.bin/nuxi",
-      "args": ["dev", "--inspect"],
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "skipFiles": ["<node_internals>/**"]
+      "name": "server: nuxt",
+      "outputCapture": "std",
+      "program": "${workspaceFolder}/node_modules/nuxt/bin/nuxt.mjs",
+      "args": ["dev"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "fullstack: nuxt",
+      "configurations": ["server: nuxt", "client: chrome"]
     }
   ]
 }

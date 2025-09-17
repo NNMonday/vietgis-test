@@ -1,7 +1,8 @@
-import data from "#shared/data/building";
+import { readBuildingsFromJSON } from "../../utils/buildingData";
 import Building from "~~/shared/types/building";
 
-export default defineEventHandler((e) => {
+export default defineEventHandler(async (e) => {
+  const data = await readBuildingsFromJSON();
   let filterData = [...data];
 
   const query = getQuery(e);

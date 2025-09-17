@@ -37,10 +37,9 @@ const emit = defineEmits<{
   buildingSelected: [building: Building];
   buildingUpdated: [];
 }>();
-
 const abortController = new AbortController();
 const { deleteBuilding } = useBuilding();
-
+const { handleError } = useToastHandler();
 const table = ref();
 DataTable.use(DataTableCore);
 const columns: ConfigColumns[] = [
@@ -93,8 +92,8 @@ const options: Config = {
   serverSide: true,
   ajax: {
     url: "/api/building",
-    error: function (_, error: string, thrown: string) {
-      console.error("AJAX error:", error, thrown);
+    error: function (_, error: string) {
+      handleError(error);
     },
   },
   rowId: "id",
